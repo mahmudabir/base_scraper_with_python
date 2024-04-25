@@ -151,7 +151,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 *.ipynb
-*.json
-*.csv
 
+*.csv
 /downloads
+
+# all json files except .vscode folder json files
+*.json
+!/.vscode/*.json
