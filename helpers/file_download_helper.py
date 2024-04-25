@@ -1,4 +1,3 @@
-
 import os
 import time
 from urllib.parse import unquote
@@ -23,7 +22,7 @@ def download_file_base(url, file_name=None, directory_name=None):
     Raises:
         None
     """
-    
+
     try:
         response = requests.get(url, timeout=5, stream=True)
         total_length = int(response.headers.get("content-length", 0))
@@ -64,5 +63,3 @@ def download_file_base(url, file_name=None, directory_name=None):
     except Exception as ex:
         # raise ex
         print(ex.with_traceback(ex.__traceback__))
-    
-
