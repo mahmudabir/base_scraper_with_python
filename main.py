@@ -1,27 +1,15 @@
 
-
 import constants
-from helpers.file_helper import FileDownloadModel, download_multiple_file_concurrently
+from helpers.file_helper import download_multiple_file_concurrently, read_file_as_string
+from helpers.json_helper import json_string_to_data
+from models.file_download_model import FileDownloadModel
 
 
 def main():
     constants.is_caching_enabled = False
     
-    files = [
-        # FileDownloadModel("http://10.16.100.214/iccftps14/iccftps14sasd5/Tv%20Show/Serials%20(Animation)/I%20Am%20Groot%20Season%2002%20(2023)%20Completed/I%20Am%20Groot%20S02E01.mp4"),
-        # FileDownloadModel("http://10.16.100.214/iccftps14/iccftps14sasd5/Tv%20Show/Serials%20(Animation)/I%20Am%20Groot%20Season%2002%20(2023)%20Completed/I%20Am%20Groot%20S02E02.mp4"),
-        # FileDownloadModel("http://10.16.100.214/iccftps14/iccftps14sasd5/Tv%20Show/Serials%20(Animation)/I%20Am%20Groot%20Season%2002%20(2023)%20Completed/I%20Am%20Groot%20S02E03.mp4"),
-        # FileDownloadModel("http://10.16.100.214/iccftps14/iccftps14sasd5/Tv%20Show/Serials%20(Animation)/I%20Am%20Groot%20Season%2002%20(2023)%20Completed/I%20Am%20Groot%20S02E04.mp4"),
-        # FileDownloadModel("http://10.16.100.214/iccftps14/iccftps14sasd5/Tv%20Show/Serials%20(Animation)/I%20Am%20Groot%20Season%2002%20(2023)%20Completed/I%20Am%20Groot%20S02E05.mp4"),
-        # FileDownloadModel("https://ash-speed.hetzner.com/1GB.bin"),
-        # FileDownloadModel("https://mcbuild.org/static/images/items/5/e00af2f0691_mcbuild.webp"),
-        # FileDownloadModel("https://mcbuild.org/static/images/items/12/ed55b223418_mcbuild.webp"),
-        # FileDownloadModel("https://mcbuild.org/static/images/items/12/ff16dc90571_mcbuild.webp"),
-        # FileDownloadModel("https://mcbuild.org/static/images/items/12/53ee5161677_mcbuild.webp"),
-        FileDownloadModel("https://sampletestfile.com/wp-content/uploads/2023/07/10MB-MP4.mp4"),
-        FileDownloadModel("https://sampletestfile.com/wp-content/uploads/2023/07/15MB-MP4.mp4"),
-    ]
-
+    data = json_string_to_data(read_file_as_string("clipboard.json"))
+    files = [FileDownloadModel(x) for x in data]
     download_multiple_file_concurrently(files)
 
 

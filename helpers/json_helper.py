@@ -10,8 +10,14 @@ def json_string_to_data(json_string: str):
     :type json_string: str
     :return: the data converted from the JSON string.
     """
-    data = json.loads(json_string)
-    return data
+    if json_string is None:
+        return None
+    else:
+        try:
+            data = json.loads(json_string)
+        except Exception as ex:
+            return None
+        return data
 
 
 def data_to_json_string(data):

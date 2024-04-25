@@ -1,5 +1,6 @@
 import concurrent.futures
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 from helpers.file_download_helper import download_file_base
 from models.file_download_model import FileDownloadModel
@@ -57,7 +58,7 @@ def download_file(model: FileDownloadModel):
     download_file_base(model.url, model.file_name, model.directory_name)
 
 def download_multiple_file_concurrently(files: list[FileDownloadModel]):
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=3) as executor:
         futures = []
         for file in files:
             futures.append(executor.submit(file.download))
