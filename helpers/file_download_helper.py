@@ -53,9 +53,9 @@ def download_file_base_without_resume(url, file_name=None, directory_name=None):
                     #     f"""{Color.PURPLE}Downloading \"{file_name}\": [{progress_bar_completed}{progress_bar_remaining}] {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} KB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
                     #     end="\r",
                     # )
-                    
+
                     print(
-                        f"""{Color.PURPLE}Downloading \"{file_name}\": {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} KB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
+                        f"""\r{Color.PURPLE}Downloading \"{file_name}\": {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} KB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
                         end="\r",
                     )
 
@@ -114,22 +114,22 @@ def download_file_base(url, file_name=None, directory_name=None):
                     f.write(data)
                     elapsed_time = time.time() - start_time
                     download_speed = (
-                        dl / (1024 * elapsed_time) if elapsed_time > 0 else 0
+                        (dl / (1024 * 1024)) / (elapsed_time) if elapsed_time > 0 else 0
                     )
-                    percent_done = dl / total_length * 50 if total_length > 0 else 0
+                    percent_done = dl / total_length * 100 if total_length > 0 else 0
 
                     if time.time() - update_time >= 2:
                         progress_bar_completed = "=" * int(percent_done / 2)
-                        progress_bar_remaining = " " * (25 - int(percent_done / 2))
+                        progress_bar_remaining = " " * (50 - int(percent_done / 2))
                         downloaded_size = dl / (1024 * 1024)
                         file_size = total_length / (1024 * 1024)
                         # print(
-                        #     f"""{Color.PURPLE}Downloading \"{file_name}\": [{progress_bar_completed}{progress_bar_remaining}] {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} KB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
+                        #     f"""{Color.PURPLE}Downloading \"{file_name}\": [{progress_bar_completed}{progress_bar_remaining}] {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} MB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
                         #     end="\r",
                         # )
-                        
+
                         print(
-                            f"""{Color.PURPLE}Downloading \"{file_name}\": {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.GREEN}[Speed: {download_speed:.3f} KB/s] {Color.YELLOW}[{downloaded_size:.2f} MB / {Color.RED}{file_size:.2f} MB] {Color.RESET}\r""",
+                            f"""{Color.PURPLE}\"{file_name}\": {Color.BLUE}[Progress: {percent_done:.2f}%] {Color.YELLOW}[{downloaded_size:.2f}MB{Color.RESET}/{Color.RED}{file_size:.2f}MB] {Color.RESET} \r""",
                             end="\r",
                         )
 
@@ -142,3 +142,4 @@ def download_file_base(url, file_name=None, directory_name=None):
     except Exception as ex:
         # raise ex
         print(ex.with_traceback(ex.__traceback__))
+        print(url)

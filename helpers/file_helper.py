@@ -57,8 +57,11 @@ def save_string_into_file(string: str, file_path: str):
 def download_file(model: FileDownloadModel):
     download_file_base(model.url, model.file_name, model.directory_name)
 
-def download_multiple_file_concurrently(files: list[FileDownloadModel]):
-    with ThreadPoolExecutor(max_workers=3) as executor:
+
+def download_multiple_file_concurrently(
+    files: list[FileDownloadModel], max_simultanious_download=3
+):
+    with ThreadPoolExecutor(max_workers=max_simultanious_download) as executor:
         futures = []
         for file in files:
             futures.append(executor.submit(file.download))
